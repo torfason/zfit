@@ -3,7 +3,7 @@
 \docType{package}
 \name{zfit}
 \alias{zfit}
-\title{zfit: Fit models in a pipe}
+\title{zfit: Fit Models in a Pipe}
 \description{
 The goal of \code{zfit} is to improve the usage of basic model
 fitting functions within a piped work flow, in particular when
