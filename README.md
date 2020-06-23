@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `zfit` is to improve the usage of basic model fitting functions within a piped work flow, in particular when passing and processing a tibble (or data.frame) using `dplyr` and associated packages.
+The goal of `zfit` is to improve the usage of basic model fitting functions within a piped work flow, in particular when passing and processing a data.frame using `dplyr` or similar packages.
 
 To this end, the package includes functions such as `zlm()` and `zglm()`. These are very similar to the core estimation functions such as `lm()` and `glm()`, but expect the first argument to be a tibble. 
 
