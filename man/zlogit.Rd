@@ -22,6 +22,7 @@ Run a logit model in a pipe (see \code{zlm})
 \seealso{
 Other zfit: 
 \code{\link{zglm}()},
+\code{\link{zlm_robust}()},
 \code{\link{zlm}()},
 \code{\link{zprint}()},
 \code{\link{zprobit}()}

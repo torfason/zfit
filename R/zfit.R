@@ -112,6 +112,25 @@ zprobit = function(data, formula, ...) {
     eval(bquote( zglm(.(substitute(data)), .(formula), family=binomial(link="probit"), ...) ))
 }
 
+#' Run an lm_robust model in a pipe (see \code{zlm})
+#'
+#' @param data A \code{data.frame} containing the model data.
+#' @param formula The \code{formula} to be fitted.
+#' @param ... Other arguments to be passed to the \code{lm_robust} function.
+#'
+#' @return A fitted model.
+#'
+#' @family zfit
+#' @export
+#'
+zlm_robust = function(data, formula, ...) {
+    # Assign data to local var, to preserve form of call (see zlm())
+    lm_robust <- estimatr::lm_robust
+    assign(deparse(substitute(data)),data)
+    eval(bquote(  lm_robust(.(formula), ..., data=.(substitute(data)))  ))
+}
+
+
 
 
 #' Print the result of a function in a pipe but return original object
