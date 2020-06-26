@@ -8,3 +8,5 @@
 * R CMD check ran without errors, warnings or notes (apart from "New submission" note)
 
 * Spelling error warnings fixed by removing unneeded references to class names and enclosing references to package names in single quotes (')
+
+* Issues with \dontrun{} fixed by replacing with \donttest{} 

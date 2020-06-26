@@ -29,7 +29,8 @@ m <- lm( speed ~ dist, cars) \%>\%
 m                 # m is the original model object
 
 # Pipe example using tidyverse example data (requires dplyr)
-\dontrun{
+\donttest{
+library(dplyr)
 sw_subset <- starwars \%>\%
   zprint(count, homeworld, sort=TRUE) \%>\% # prints counts by homeworld
   filter(homeworld=="Tatooine")
