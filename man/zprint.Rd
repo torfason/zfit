@@ -28,14 +28,12 @@ m <- lm( speed ~ dist, cars) \%>\%
   zprint(summary) # prints summary(x)
 m                 # m is the original model object
 
-# Pipe example using tidyverse example data (requires dplyr)
-\donttest{
-library(dplyr)
-sw_subset <- starwars \%>\%
-  zprint(count, homeworld, sort=TRUE) \%>\% # prints counts by homeworld
-  filter(homeworld=="Tatooine")
-sw_subset  # sw_subset is ungrouped, but filtered by homeworld}
-
+if(require("dplyr")) {
+  cw_subset <- chickwts \%>\%
+    zprint(count, feed, sort=TRUE) \%>\% # prints counts by feed
+    filter(feed=="soybean")
+  cw_subset # cw_subset is ungrouped, but filtered by feed
+}
 }
 \seealso{
 Other zfit: 

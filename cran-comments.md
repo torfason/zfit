@@ -9,4 +9,6 @@
 
 * Spelling error warnings fixed by removing unneeded references to class names and enclosing references to package names in single quotes (')
 
-* Issues with \dontrun{} fixed by replacing with \donttest{} 
+* \dontrun{} conditionals have been replaced with if(require("dplyr")){} conditionals. It had been suggested to replace \dontrun{} with \donttest{}, but that does not seem applicable because this is not a long-running calculation.
+
+* Some examples were also modified because the utf8 package is not currently available on Windows buildservers for the development version of R. The examples now use datasets that does not require the utf8 package.

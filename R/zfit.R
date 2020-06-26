@@ -27,11 +27,11 @@ NULL
 #' cars %>% zlm( speed ~ dist )
 #'
 #' # Process iris with filter before piping to zlm (requires dplyr)
-#' \donttest{
-#' library(dplyr)
-#' iris %>%
-#'   filter(Species=="setosa") %>%
-#'   zlm(Sepal.Length ~ Sepal.Width + Petal.Width)}
+#' if(require("dplyr")) {
+#'   iris %>%
+#'     filter(Species=="setosa") %>%
+#'     zlm(Sepal.Length ~ Sepal.Width + Petal.Width)
+#' }
 #'
 #' @family zfit
 #' @export
@@ -122,7 +122,6 @@ zprobit = function(data, formula, ...) {
 #' the original object. An example is printing the \code{summary()} of an
 #' estimated model but
 #'
-#'
 #' @param x An object, typically in a pipe
 #' @param f A function to be applied to \code{x} before printing
 #' @param ... Other arguments to be passed to \code{f}
@@ -134,13 +133,12 @@ zprobit = function(data, formula, ...) {
 #'   zprint(summary) # prints summary(x)
 #' m                 # m is the original model object
 #'
-#' # Pipe example using tidyverse example data (requires dplyr)
-#' \donttest{
-#' library(dplyr)
-#' sw_subset <- starwars %>%
-#'   zprint(count, homeworld, sort=TRUE) %>% # prints counts by homeworld
-#'   filter(homeworld=="Tatooine")
-#' sw_subset  # sw_subset is ungrouped, but filtered by homeworld}
+#' if(require("dplyr")) {
+#'   cw_subset <- chickwts %>%
+#'     zprint(count, feed, sort=TRUE) %>% # prints counts by feed
+#'     filter(feed=="soybean")
+#'   cw_subset # cw_subset is ungrouped, but filtered by feed
+#' }
 #'
 #' @family zfit
 #' @export
