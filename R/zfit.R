@@ -27,7 +27,8 @@ NULL
 #' cars %>% zlm( speed ~ dist )
 #'
 #' # Process iris with filter before piping to zlm (requires dplyr)
-#' \dontrun{
+#' \donttest{
+#' library(dplyr)
 #' iris %>%
 #'   filter(Species=="setosa") %>%
 #'   zlm(Sepal.Length ~ Sepal.Width + Petal.Width)}
@@ -134,7 +135,8 @@ zprobit = function(data, formula, ...) {
 #' m                 # m is the original model object
 #'
 #' # Pipe example using tidyverse example data (requires dplyr)
-#' \dontrun{
+#' \donttest{
+#' library(dplyr)
 #' sw_subset <- starwars %>%
 #'   zprint(count, homeworld, sort=TRUE) %>% # prints counts by homeworld
 #'   filter(homeworld=="Tatooine")
