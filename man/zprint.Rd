@@ -34,6 +34,7 @@ if(require("dplyr")) {
     filter(feed=="soybean")
   cw_subset # cw_subset is ungrouped, but filtered by feed
 }
+
 }
 \seealso{
 Other zfit: 
