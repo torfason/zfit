@@ -60,3 +60,11 @@ sw_subset <- starwars %>%
   filter(homeworld=="Tatooine")
 sw_subset  # sw_subset is ungrouped, but filtered by homeworld
 ```
+
+Another use of `zprint()` is to take a peek at the structure of an object (with `str()`, `unclass()` or some other function that exposes raw structure at some point in a processing pipeline, before further modification.
+
+``` r
+air <- airmiles %>%
+  zprint(unclass)
+```
+

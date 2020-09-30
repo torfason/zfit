@@ -85,3 +85,34 @@ test_that("zprobit works", {
     }
 
 })
+
+
+context("zpoisson")
+test_that("zprobit works", {
+
+    # # To originally get the data suitable for testing poisson
+    # # https://stats.idre.ucla.edu/r/dae/poisson-regression/
+    # d.org <- readr::read_csv("https://stats.idre.ucla.edu/stat/data/poisson_sim.csv",
+    #                      col_types= cols(
+    #                       id = col_integer(),
+    #                       num_awards = col_integer(),
+    #                       prog = col_integer(),
+    #                       math = col_double()
+    #                     ))
+    # d <- d.org %>%
+    #     mutate( id = factor(id),  prog = factor(prog, levels=1:3,
+    #             labels=c("General", "Academic",  "Vocational"))) %>%
+    #     relocate(id, prog, math, num_awards) %>%
+    #     arrange(d, id)
+    # d %>% write_rds("tests/testthat/datasets/awards.rds", compress="xz", compression=9L)
+
+    # Test usage in the context of regular parameters
+    # These three forms should be
+    awards  <- readRDS("datasets/awards.rds")
+    m.glm   <- glm(num_awards ~ prog + math, family="poisson", awards)
+    m.zglm  <- zglm(awards, num_awards ~ prog + math, "poisson")
+    m.zpoisson <- zpoisson(awards, num_awards ~ prog + math)
+    expect_equal(m.zpoisson,m.zglm)
+    expect_equal(m.zpoisson,m.glm)
+
+})
