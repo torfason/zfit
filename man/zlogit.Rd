@@ -24,6 +24,7 @@ Other zfit:
 \code{\link{zglm}()},
 \code{\link{zlm_robust}()},
 \code{\link{zlm}()},
+\code{\link{zpoisson}()},
 \code{\link{zprint}()},
 \code{\link{zprobit}()}
 }

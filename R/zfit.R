@@ -112,6 +112,23 @@ zprobit = function(data, formula, ...) {
     eval(bquote( zglm(.(substitute(data)), .(formula), family=binomial(link="probit"), ...) ))
 }
 
+#' Run a poisson model in a pipe (see \code{zlm})
+#'
+#' @param data A \code{data.frame} containing the model data.
+#' @param formula The \code{formula} to be fitted.
+#' @param ... Other arguments to be passed to the \code{glm} function.
+#'
+#' @return A fitted model.
+#'
+#' @family zfit
+#' @export
+#'
+zpoisson = function(data, formula, ...) {
+    # Assign data to local var, to preserve form of call (see zlm())
+    assign(deparse(substitute(data)),data)
+    eval(bquote( zglm(.(substitute(data)), .(formula), family="poisson", ...) ))
+}
+
 #' Run an lm_robust model in a pipe (see \code{zlm})
 #'
 #' @param data A \code{data.frame} containing the model data.

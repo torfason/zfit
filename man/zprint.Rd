@@ -42,6 +42,7 @@ Other zfit:
 \code{\link{zlm_robust}()},
 \code{\link{zlm}()},
 \code{\link{zlogit}()},
+\code{\link{zpoisson}()},
 \code{\link{zprobit}()}
 }
 \concept{zfit}
