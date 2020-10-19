@@ -179,8 +179,12 @@ zlm_robust = function(data, formula, ...) {
 #' @family zfit
 #' @export
 #'
-zprint = function(x, f, ...) {
+zprint = function(x, f=NULL, ...) {
+  if (is.null(f)) {
+    print(x)
+  } else {
     print(f(x, ...))
-    return(x)
+  }
+  invisible(x)
 }
 

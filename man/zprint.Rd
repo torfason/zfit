@@ -4,7 +4,7 @@
 \alias{zprint}
 \title{Print the result of a function in a pipe but return original object}
 \usage{
-zprint(x, f, ...)
+zprint(x, f = NULL, ...)
 }
 \arguments{
 \item{x}{An object, typically in a pipe}
