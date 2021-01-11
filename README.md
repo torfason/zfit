@@ -46,7 +46,14 @@ same way with the new native pipe syntax (`|>`).*
 
 ## Installation
 
-You can install the development version of zfit from
+Install the release version from
+[CRAN](https://CRAN.R-project.org/package=zfit) with:
+
+``` r
+install.packages("zfit")
+```
+
+Install the development version from
 [GitHub](https://github.com/torfason/zfit) with:
 
 ``` r
