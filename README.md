@@ -16,19 +16,33 @@ status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/p
 
 The goal of `zfit` is to improve the usage of basic model fitting
 functions within a piped work flow, in particular when passing and
-processing a `data.frame` using `dplyr` or similar packages.
+processing a `data.frame` (or `tibble`) before passing them to `lm()` or
+related functions. The problem with doing this is that the pipes pass
+the data object (`data.frame`/`tibble`) as the first parameter to the
+function, but the conventional estimation functions expect a formula to
+be the first parameter.
 
-To this end, the package includes functions such as `zlm()` and
+This is somewhat annoying when using `magrittr` style pipe, but can be
+addressed by using a trick to pass the data into a subsequent parameter
+using `data=.`. With the new native pipes however, this is not possible,
+and the only workaround is to construct an anonymous function for each
+estimation.
+
+To address this, this package includes functions such as `zlm()` and
 `zglm()`. These are very similar to the core estimation functions such
-as `lm()` and `glm()`, but expect the first argument to be a tibble.
+as `lm()` and `glm()`, but expect the first argument to be a
+(`data.frame`/`tibble`) rather than a formula (the formula becomes the
+second argument).
 
-The `zprint()` function is intended to simplify the printing of derived
-results, such as `summary()`, within the pipe, without affecting the
-modeling result itself.
+The package also includes the `zprint()` function, which is intended to
+simplify the printing of derived results, such as `summary()`, within
+the pipe, without affecting the modeling result itself. It also includes
+convenience functions for calling estimation functions using particular
+parameters, including `zlogit()` and `zprobit()`, to perform logistic
+regression within a pipe.
 
-The package also includes convenience functions for calling estimation
-functions using particular parameters, including `zlogit()` and
-`zprobit()`, to perform logistic regression within a pipe.
+*The examples use magrittr-style (`%>%`) pipe syntax, but work in the
+same way with the new native pipe syntax (`|>`).*
 
 ## Installation
 
@@ -48,14 +62,15 @@ library(zfit)
 library(dplyr)
 ```
 
-The most basic use of the functions in this package is to pass a tibble
-to `zlm()`:
+The most basic use of the functions in this package is to pass a
+`data.frame`/`tibble` to `zlm()`:
 
 ``` r
 cars %>% zlm( speed ~ dist )
 ```
 
-Often, it is useful to process the tibble before passing it to `zlm()`:
+Often, it is useful to process the `data.frame`/`tibble` before passing
+it to `zlm()`:
 
 ``` r
 iris %>%

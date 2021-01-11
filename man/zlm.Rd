@@ -25,7 +25,7 @@ more friendly to pipe syntax (with the data first)
 cars \%>\% zlm( speed ~ dist )
 
 # Process iris with filter before piping to zlm (requires dplyr)
-if(require("dplyr")) {
+if(require("dplyr", warn.conflicts=FALSE)) {
   iris \%>\%
     filter(Species=="setosa") \%>\%
     zlm(Sepal.Length ~ Sepal.Width + Petal.Width)

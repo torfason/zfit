@@ -28,7 +28,7 @@ m <- lm( speed ~ dist, cars) \%>\%
   zprint(summary) # prints summary(x)
 m                 # m is the original model object
 
-if(require("dplyr")) {
+if(require("dplyr", warn.conflicts=FALSE)) {
   cw_subset <- chickwts \%>\%
     zprint(count, feed, sort=TRUE) \%>\% # prints counts by feed
     filter(feed=="soybean")

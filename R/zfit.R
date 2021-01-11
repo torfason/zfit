@@ -27,7 +27,7 @@ NULL
 #' cars %>% zlm( speed ~ dist )
 #'
 #' # Process iris with filter before piping to zlm (requires dplyr)
-#' if(require("dplyr")) {
+#' if(require("dplyr", warn.conflicts=FALSE)) {
 #'   iris %>%
 #'     filter(Species=="setosa") %>%
 #'     zlm(Sepal.Length ~ Sepal.Width + Petal.Width)
@@ -133,7 +133,7 @@ zprobit = function(data, formula, ...) {
 #'   zprint(summary) # prints summary(x)
 #' m                 # m is the original model object
 #'
-#' if(require("dplyr")) {
+#' if(require("dplyr", warn.conflicts=FALSE)) {
 #'   cw_subset <- chickwts %>%
 #'     zprint(count, feed, sort=TRUE) %>% # prints counts by feed
 #'     filter(feed=="soybean")

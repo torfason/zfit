@@ -60,7 +60,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/torfason/zfit/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -82,10 +89,11 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p>The goal of <code>zfit</code> is to improve the usage of basic model fitting functions within a piped work flow, in particular when passing and processing a <code>data.frame</code> using <code>dplyr</code> or similar packages.</p>
-<p>To this end, the package includes functions such as <code><a href="reference/zlm.html">zlm()</a></code> and <code><a href="reference/zglm.html">zglm()</a></code>. These are very similar to the core estimation functions such as <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>, but expect the first argument to be a tibble.</p>
-<p>The <code><a href="reference/zprint.html">zprint()</a></code> function is intended to simplify the printing of derived results, such as <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, within the pipe, without affecting the modeling result itself.</p>
-<p>The package also includes convenience functions for calling estimation functions using particular parameters, including <code><a href="reference/zlogit.html">zlogit()</a></code> and <code><a href="reference/zprobit.html">zprobit()</a></code>, to perform logistic regression within a pipe.</p>
+<p>The goal of <code>zfit</code> is to improve the usage of basic model fitting functions within a piped work flow, in particular when passing and processing a <code>data.frame</code> (or <code>tibble</code>) before passing them to <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> or related functions. The problem with doing this is that the pipes pass the data object (<code>data.frame</code>/<code>tibble</code>) as the first parameter to the function, but the conventional estimation functions expect a formula to be the first parameter.</p>
+<p>This is somewhat annoying when using <code>magrittr</code> style pipe, but can be addressed by using a trick to pass the data into a subsequent parameter using <code>data=.</code>. With the new native pipes however, this is not possible, and the only workaround is to construct an anonymous function for each estimation.</p>
+<p>To address this, this package includes functions such as <code><a href="reference/zlm.html">zlm()</a></code> and <code><a href="reference/zglm.html">zglm()</a></code>. These are very similar to the core estimation functions such as <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>, but expect the first argument to be a (<code>data.frame</code>/<code>tibble</code>) rather than a formula (the formula becomes the second argument).</p>
+<p>The package also includes the <code><a href="reference/zprint.html">zprint()</a></code> function, which is intended to simplify the printing of derived results, such as <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, within the pipe, without affecting the modeling result itself. It also includes convenience functions for calling estimation functions using particular parameters, including <code><a href="reference/zlogit.html">zlogit()</a></code> and <code><a href="reference/zprobit.html">zprobit()</a></code>, to perform logistic regression within a pipe.</p>
+<p><em>The examples use magrittr-style (<code><a href="reference/%&gt;%.html">%&gt;%</a></code>) pipe syntax, but work in the same way with the new native pipe syntax (<code>|&gt;</code>).</em></p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -101,10 +109,10 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">zfit</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
-<p>The most basic use of the functions in this package is to pass a tibble to <code><a href="reference/zlm.html">zlm()</a></code>:</p>
+<p>The most basic use of the functions in this package is to pass a <code>data.frame</code>/<code>tibble</code> to <code><a href="reference/zlm.html">zlm()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/zlm.html">zlm</a></span><span class="op">(</span> <span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span> <span class="op">)</span></code></pre></div>
-<p>Often, it is useful to process the tibble before passing it to <code><a href="reference/zlm.html">zlm()</a></code>:</p>
+<p>Often, it is useful to process the <code>data.frame</code>/<code>tibble</code> before passing it to <code><a href="reference/zlm.html">zlm()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span> <span class="va">Species</span><span class="op">==</span><span class="st">"setosa"</span> <span class="op">)</span> <span class="op">%&gt;%</span>
@@ -130,6 +138,8 @@
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=zfit">https://​cloud.r-project.org/​package=zfit</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/torfason/zfit/">https://​github.com/​torfason/​zfit/​</a>
 </li>
 </ul>
 </div>
