@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# zfit <a href='-https://github.com/torfason/zfit/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# zfit <a href='https://github.com/torfason/zfit/'><img src='man/figures/logo.png' align="right" width="140px" /></a>
 
 <!-- badges: start -->
 
@@ -14,35 +14,65 @@ status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/p
 
 ## Overview
 
-The goal of `zfit` is to improve the usage of basic model fitting
-functions within a piped work flow, in particular when passing and
-processing a `data.frame` (or `tibble`) before passing them to `lm()` or
-related functions. The problem with doing this is that the pipes pass
-the data object (`data.frame`/`tibble`) as the first parameter to the
-function, but the conventional estimation functions expect a formula to
-be the first parameter.
+The goal of `zfit` is to make it easier to use a piped workflow with
+functions that don’t have the “correct” order of parameters (the first
+parameter of the function does not match the object passing through the
+pipe). This issue is especially prevalent with model fitting functions,
+such as when passing and processing a `data.frame` (or `tibble`) before
+passing them to `lm()` or similar functions. The pipe passes the data
+object (`data.frame`/`tibble`) into the first parameter of the function,
+but the conventional estimation functions expect a formula to be the
+first parameter.
 
-This is somewhat annoying when using `magrittr` style pipe, but can be
-addressed by using a trick to pass the data into a subsequent parameter
-using `data=.`. With the new native pipes however, this is not possible,
-and the only workaround is to construct an anonymous function for each
-estimation.
+When using `magrittr` style pipes (`%>%`), this can be addressed by
+using special syntax, specifying `data=.` to pass the piped data into a
+parameter other than the first one. With R native pipes (`|>`), however,
+this is not possible and workaround are needed (such as constructing an
+anonymous function for each estimation or relying on complex rules about
+how piped arguments are interpreted in the presence of named
+parameters).
 
-To address this, this package includes functions such as `zlm()` and
-`zglm()`. These are very similar to the core estimation functions such
-as `lm()` and `glm()`, but expect the first argument to be a
-(`data.frame`/`tibble`) rather than a formula (the formula becomes the
-second argument).
+To address this, this package includes functions such as
+[zlm()](https://torfason.github.io/zfit/reference/zlm.html) and
+[zglm()](https://torfason.github.io/zfit/reference/zglm.html). These are
+very similar to the core estimation functions such as `lm()` and
+`glm()`, but expect the first argument to be a (`data.frame`/`tibble`)
+rather than a formula (the formula becomes the second argument).
 
-The package also includes the `zprint()` function, which is intended to
-simplify the printing of derived results, such as `summary()`, within
-the pipe, without affecting the modeling result itself. It also includes
-convenience functions for calling estimation functions using particular
-parameters, including `zlogit()` and `zprobit()`, to perform logistic
-regression within a pipe.
+More importantly, the package includes two functions that make it
+trivial to construct a pipe-friendly version of any function. The
+[zfitter()](https://torfason.github.io/zfit/reference/zfitter.html)
+function takes any estimation function with the standard format of a
+`formula` and `data` parameter, and returns a version suitable for us in
+pipes (with the `data` parameter coming first). The
+[zfitter()](https://torfason.github.io/zfit/reference/zfitter.html)
+function also does some special handling to make make the call
+information more useful.
 
-*The examples use magrittr-style (`%>%`) pipe syntax, but work in the
-same way with the new native pipe syntax (`|>`).*
+The
+[zfunction()](https://torfason.github.io/zfit/reference/zfunction.html)
+works for any function but omits the special handling for call
+parameters. Just pass the name of a function, and the name of the
+parameter that should receive the piped argument, and it returns a
+version of the function with that parameter coming first.
+
+The package also includes the
+[zprint()](https://torfason.github.io/zfit/reference/zprint.html)
+function, which is intended to simplify the printing of derived results,
+such as `summary()`, within the pipe, without affecting the modeling
+result itself. It also includes convenience functions for calling
+estimation functions using particular parameters, including
+[zlogit()](https://torfason.github.io/zfit/reference/zlogit.html) and
+[zprobit()](https://torfason.github.io/zfit/reference/zprobit.html), and
+[zpoisson()](https://torfason.github.io/zfit/reference/zpoisson.html),
+to perform logistic or poisson regression within a pipe.
+
+*Note that some of the examples provided in the help and documentation
+use magrittr-style (`%>%`) pipe syntax, while others use the native pipe
+syntax (`|>`). The package has been tested with both types of pipe
+functionality and the results are identical, apart from the fact that
+`%>%` renames the piped argument to `.`, whereas the name of the piped
+argument is the complete nested function syntax of the pipe.*
 
 ## Installation
 
