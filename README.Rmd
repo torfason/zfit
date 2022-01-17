@@ -21,9 +21,9 @@ knitr::opts_chunk$set(
 [zlm()]: https://torfason.github.io/zfit/reference/zlm.html
 [zglm()]: https://torfason.github.io/zfit/reference/zglm.html
 
-[zlogit()]: https://torfason.github.io/zfit/reference/zlogit.html
-[zprobit()]: https://torfason.github.io/zfit/reference/zprobit.html
-[zpoisson()]: https://torfason.github.io/zfit/reference/zpoisson.html
+[zlogit()]: https://torfason.github.io/zfit/reference/zglm.html
+[zprobit()]: https://torfason.github.io/zfit/reference/zglm.html
+[zpoisson()]: https://torfason.github.io/zfit/reference/zglm.html
 
 # zfit <a href='https://github.com/torfason/zfit/'><img src='man/figures/logo.png' align="right" width="140px" /></a>
 

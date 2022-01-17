@@ -52,10 +52,13 @@
 #'     data[data[,column]==value,]
 #'   }
 #'
-#'   # Process iris with filter before piping to zlm
-#'   iris |>
+#'   # Process iris with filter() before piping. Print a summary()
+#'   # of the fitted model using zprint() before assigning the
+#'   # model itself (not the summary) to m
+#'   m <- iris |>
 #'     filter_naive("Species","setosa") |>
-#'     zlm(Sepal.Length ~ Sepal.Width + Petal.Width)
+#'     zlm(Sepal.Length ~ Sepal.Width + Petal.Width) |>
+#'     zprint(summary)
 #' }
 #'
 #' @md

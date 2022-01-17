@@ -86,17 +86,51 @@ utils::globalVariables("data")
 #' Create a pipe-friendly version of a given fitting function
 #'
 #' @description
-#' Compared to just using `zfunction()`, this function stores the base
-#' name, allowing one to use full name of the original fitting function
-#' (such as `MASS::polr`), which is useful to just pull a single
-#' fitting function from a package without loading it. It also shortens
-#' very long data names (longer than 32 characters by default), which
-#' otherwise are a nuisance when the data comes from the pipe, because
-#' the pipeline gets converted to a very long function call.
+#' This creates a pipe-friendly verion of a fitting function of the
+#' standard format –– that is a function with a `formula` parameter
+#' followed by a `data` parameter.
+#'
+#' Compared to just using `zfunction()`, this function includes some special
+#' handling to make the call information, which is usually reported by the
+#' `summary()` function more intuitive. Among other things, it shortens very
+#' long data names (longer than 32 characters by default), which otherwise are a
+#' nuisance when the data comes from the pipe, because the pipeline gets
+#' converted to a very long function call.
+#'
+#' This function also stores the base name of the original fitting function,
+#' allowing one to use itsfull name, which is useful to just pull a single
+#' fitting function from a package without loading it.
 #'
 #' @param fun The fitting function to adapt. The name should not be quoted,
 #'   rather, the actual function should be passed (prefixed with package
 #'   if needed)
+#'
+#' @examples
+#'
+#' zlm_robust <- zfitter(estimatr::lm_robust)
+#' zlm_robust(cars, speed~dist)
+#'
+#' # The resulting function works well the native pipe ...
+#' if ( getRversion() >= "4.1.0" ) {
+#'
+#'   # Pipe cars dataset into zlm_robust for fitting
+#'   cars |> zlm_robust( speed ~ dist )
+#' }
+#'
+#' # ... or with dplyr
+#' if ( require("dplyr", warn.conflicts=FALSE) ) {
+#'
+#'   # Pipe cars dataset into zlm_robust for fitting
+#'   cars %>% zlm_robust( speed ~ dist )
+#'
+#'   # Process iris with filter() before piping. Print a summary()
+#'   # of the fitted model using zprint() before assigning the
+#'   # model itself (not the summary) to m
+#'   m <- iris %>%
+#'     dplyr::filter(Species=="setosa") %>%
+#'     zlm_robust(Sepal.Length ~ Sepal.Width + Petal.Width) %>%
+#'     zprint(summary)
+#' }
 #'
 #' @md
 #' @export
