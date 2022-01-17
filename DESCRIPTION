@@ -1,22 +1,25 @@
 Package: zfit
 Type: Package
 Title: Fit Models in a Pipe
-Version: 0.1.0
+Version: 0.2.9001
 Author: Magnus Thor Torfason
 Maintainer: Magnus Thor Torfason <m@zulutime.net>
-Description: 
-    The goal of 'zfit' is to improve the usage of basic model fitting
-    functions within a piped work flow, in particular when passing
-    and processing a data.frame using 'dplyr' or similar packages.
+Description: The goal of 'zfit' is to improve the usage of basic 
+  model fitting functions within a piped work flow, in particular 
+  when passing and processing a data.frame using 'dplyr' or 
+  similar packages.
 License: MIT + file LICENSE
 URL: https://torfason.github.io/zfit/,
-    https://github.com/torfason/zfit
+  https://github.com/torfason/zfit
 Language: en-US
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
+Depends: 
+  R (>= 3.5.0)
 Suggests: 
-    testthat,
-    dplyr
-Imports: 
-    magrittr
+  testthat (>= 3.0.0), 
+  dplyr,
+  MASS,
+  estimatr,
+Imports:

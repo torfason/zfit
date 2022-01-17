@@ -4,3 +4,6 @@
 ^cran-comments\.md$
 ^scratches$
 ^CRAN-RELEASE$
+^README.Rmd$
+^docs$
+^pkgdown$
