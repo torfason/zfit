@@ -1,7 +1,7 @@
 Package: zfit
 Type: Package
 Title: Fit Models in a Pipe
-Version: 0.2.9001
+Version: 0.3.0
 Author: Magnus Thor Torfason
 Maintainer: Magnus Thor Torfason <m@zulutime.net>
 Description: The goal of 'zfit' is to improve the usage of basic 
