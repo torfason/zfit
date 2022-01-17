@@ -18,7 +18,7 @@ more friendly to pipe syntax (with the data first)."><meta property="og:image" c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zfit</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -141,7 +141,6 @@ linear models.</p></li>
 <span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span><span class="op">==</span><span class="st">"setosa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu">zlm</span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: dplyr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = Sepal.Length ~ Sepal.Width + Petal.Width, data = .)</span>
@@ -162,10 +161,13 @@ linear models.</p></li>
 <span class="r-in">    <span class="va">data</span><span class="op">[</span><span class="va">data</span><span class="op">[</span>,<span class="va">column</span><span class="op">]</span><span class="op">==</span><span class="va">value</span>,<span class="op">]</span></span>
 <span class="r-in">  <span class="op">}</span></span>
 <span class="r-in"></span>
-<span class="r-in">  <span class="co"># Process iris with filter before piping to zlm</span></span>
-<span class="r-in">  <span class="va">iris</span> |&gt;</span>
+<span class="r-in">  <span class="co"># Process iris with filter() before piping. Print a summary()</span></span>
+<span class="r-in">  <span class="co"># of the fitted model using zprint() before assigning the</span></span>
+<span class="r-in">  <span class="co"># model itself (not the summary) to m</span></span>
+<span class="r-in">  <span class="va">m</span> <span class="op">&lt;-</span> <span class="va">iris</span> |&gt;</span>
 <span class="r-in">    <span class="fu">filter_naive</span><span class="op">(</span><span class="st">"Species"</span>,<span class="st">"setosa"</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">    <span class="fu">zlm</span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span><span class="op">)</span></span>
+<span class="r-in">    <span class="fu">zlm</span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">    <span class="fu"><a href="zprint.html">zprint</a></span><span class="op">(</span><span class="va">summary</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in filter_naive(iris, "Species", "setosa"):</span> could not find function "filter_naive"</span>
 <span class="r-in"></span>

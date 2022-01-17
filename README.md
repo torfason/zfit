@@ -62,10 +62,10 @@ function, which is intended to simplify the printing of derived results,
 such as `summary()`, within the pipe, without affecting the modeling
 result itself. It also includes convenience functions for calling
 estimation functions using particular parameters, including
-[zlogit()](https://torfason.github.io/zfit/reference/zlogit.html) and
-[zprobit()](https://torfason.github.io/zfit/reference/zprobit.html), and
-[zpoisson()](https://torfason.github.io/zfit/reference/zpoisson.html),
-to perform logistic or poisson regression within a pipe.
+[zlogit()](https://torfason.github.io/zfit/reference/zglm.html) and
+[zprobit()](https://torfason.github.io/zfit/reference/zglm.html), and
+[zpoisson()](https://torfason.github.io/zfit/reference/zglm.html), to
+perform logistic or poisson regression within a pipe.
 
 *Note that some of the examples provided in the help and documentation
 use magrittr-style (`%>%`) pipe syntax, while others use the native pipe
