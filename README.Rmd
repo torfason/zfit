@@ -36,6 +36,26 @@ knitr::opts_chunk$set(
 [//b]: # ( [![codecov](https://codecov.io/gh/torfason/zfit/branch/master/graph/badge.svg)](https://codecov.io/gh/torfason/zfit) )
 <!-- badges: end -->
 
+## TL;DR
+
+If you are tired of doing the following:
+
+``` r
+dat <- mtcars %>%
+  filter( am==1 )
+lm( mpg ~ wt + hp, data=dat )
+```
+
+and would like to do this instead:
+
+``` r
+mtcars %>%
+  filter( am==1 ) %>%
+  zlm( mpg ~ wt + hp )
+```
+
+then this little package might be something for you.
+
 ## Overview
 
 ```{r child="man/include/overview.Rmd"}

@@ -12,6 +12,26 @@ status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/p
 
 <!-- badges: end -->
 
+## TL;DR
+
+If you are tired of doing the following:
+
+``` r
+dat <- mtcars %>%
+  filter( am==1 )
+lm( mpg ~ wt + hp, data=dat )
+```
+
+and would like to do this instead:
+
+``` r
+mtcars %>%
+  filter( am==1 ) %>%
+  zlm( mpg ~ wt + hp )
+```
+
+then this little package might be something for you.
+
 ## Overview
 
 The goal of `zfit` is to make it easier to use a piped workflow with

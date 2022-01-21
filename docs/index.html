@@ -83,6 +83,21 @@
 
 <!-- badges: end -->
 <div class="section level2">
+<h2 id="tldr">TL;DR<a class="anchor" aria-label="anchor" href="#tldr"></a>
+</h2>
+<p>If you are tired of doing the following:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="va">am</span><span class="op">==</span><span class="fl">1</span> <span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span>, data<span class="op">=</span><span class="va">dat</span> <span class="op">)</span></code></pre></div>
+<p>and would like to do this instead:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mtcars</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="va">am</span><span class="op">==</span><span class="fl">1</span> <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/zlm.html">zlm</a></span><span class="op">(</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span> <span class="op">)</span></code></pre></div>
+<p>then this little package might be something for you.</p>
+</div>
+<div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p>The goal of <code>zfit</code> is to make it easier to use a piped workflow with functions that don’t have the “correct” order of parameters (the first parameter of the function does not match the object passing through the pipe). This issue is especially prevalent with model fitting functions, such as when passing and processing a <code>data.frame</code> (or <code>tibble</code>) before passing them to <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> or similar functions. The pipe passes the data object (<code>data.frame</code>/<code>tibble</code>) into the first parameter of the function, but the conventional estimation functions expect a formula to be the first parameter.</p>
@@ -97,35 +112,35 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the release version from <a href="https://CRAN.R-project.org/package=zfit" class="external-link">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"zfit"</span><span class="op">)</span></code></pre></div>
 <p>Install the development version from <a href="https://github.com/torfason/zfit" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"torfason/zfit"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>The examples below assume that the following packages are loaded:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://torfason.github.io/zfit/" class="external-link">zfit</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
 <p>The most basic use of the functions in this package is to pass a <code>data.frame</code>/<code>tibble</code> to <code><a href="reference/zlm.html">zlm()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/zlm.html">zlm</a></span><span class="op">(</span> <span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span> <span class="op">)</span></code></pre></div>
 <p>Often, it is useful to process the <code>data.frame</code>/<code>tibble</code> before passing it to <code><a href="reference/zlm.html">zlm()</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="va">Species</span><span class="op">==</span><span class="st">"setosa"</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="reference/zlm.html">zlm</a></span><span class="op">(</span> <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span> <span class="op">)</span></code></pre></div>
 <p>The <code><a href="reference/zprint.html">zprint()</a></code> function provides a simple way to “tee” the piped object for printing a derived object, but then passing the <em>original</em> object onward through the pipe. The following code pipes an estimation model object into <code>zprint(summary)</code>. This means that the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function is called on the model being passed through the pipe, and the resulting summary is printed. However, <code>zprint(summary)</code> then returns the original model object, which is assigned to <code>m</code> (instead of assigning the summary object):</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span><span class="op">==</span><span class="st">"setosa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="reference/zlm.html">zlm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="reference/zprint.html">zprint</a></span><span class="op">(</span><span class="va">summary</span><span class="op">)</span></code></pre></div>
 <p>The <code><a href="reference/zprint.html">zprint()</a></code> function is quite useful within an estimation pipeline to print a summary of an object without returning the summary (using <code>zprint(summary)</code> as above), but it can also be used independently from estimation models, such as to print a summarized version of a tibble within a pipeline before further processing, without breaking the pipeline:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sw_subset</span> <span class="op">&lt;-</span> <span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="reference/zprint.html">zprint</a></span><span class="op">(</span><span class="va">count</span>, <span class="va">homeworld</span>, sort<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># prints counts by homeworld</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">homeworld</span><span class="op">==</span><span class="st">"Tatooine"</span><span class="op">)</span>
