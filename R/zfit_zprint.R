@@ -2,10 +2,11 @@
 #' Print the result of a function in a pipe but return original object
 #'
 #' This function passes \code{x} to \code{f} and prints the result, but then
-#' returns the original \code{x}. It is useful in a pipe, when one wants a
-#' to print the derivative of an object in the pipe but then return or assign
-#' the original object. An example is printing the \code{summary()} of an
-#' estimated model but
+#' returns the original \code{x}. It is useful in a pipe, when one wants a to
+#' print the derivative of an object in the pipe but then return or assign the
+#' original object. A common use case is printing the \code{summary()} of an
+#' estimated model but then assigning the original model (rather than the
+#' summary object) to a variable for further processing.
 #'
 #' @param x An object, typically in a pipe
 #' @param f A function to be applied to \code{x} before printing
