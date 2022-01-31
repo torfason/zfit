@@ -12,7 +12,7 @@ rather, the actual function should be passed (prefixed with package
 if needed)}
 }
 \description{
-This creates a pipe-friendly verion of a fitting function of the
+This creates a pipe-friendly version of a fitting function of the
 standard format –– that is a function with a \code{formula} parameter
 followed by a \code{data} parameter.
 
@@ -24,7 +24,7 @@ nuisance when the data comes from the pipe, because the pipeline gets
 converted to a very long function call.
 
 This function also stores the base name of the original fitting function,
-allowing one to use itsfull name, which is useful to just pull a single
+allowing one to use its full name, which is useful to just pull a single
 fitting function from a package without loading it.
 }
 \examples{

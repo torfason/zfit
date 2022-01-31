@@ -86,7 +86,7 @@ utils::globalVariables("data")
 #' Create a pipe-friendly version of a given fitting function
 #'
 #' @description
-#' This creates a pipe-friendly verion of a fitting function of the
+#' This creates a pipe-friendly version of a fitting function of the
 #' standard format –– that is a function with a `formula` parameter
 #' followed by a `data` parameter.
 #'
@@ -98,7 +98,7 @@ utils::globalVariables("data")
 #' converted to a very long function call.
 #'
 #' This function also stores the base name of the original fitting function,
-#' allowing one to use itsfull name, which is useful to just pull a single
+#' allowing one to use its full name, which is useful to just pull a single
 #' fitting function from a package without loading it.
 #'
 #' @param fun The fitting function to adapt. The name should not be quoted,
