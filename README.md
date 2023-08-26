@@ -10,6 +10,7 @@ status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/p
 [![Dependencies](https://tinyverse.netlify.com/badge/zfit)](https://cran.r-project.org/package=zfit)
 ![CRAN downloads](https://cranlogs.r-pkg.org/badges/zfit)
 
+[![R-CMD-check](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## TL;DR

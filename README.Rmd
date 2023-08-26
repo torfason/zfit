@@ -34,6 +34,7 @@ knitr::opts_chunk$set(
 
 [//a]: # ( ![check_cran](https://github.com/torfason/zfit/workflows/check_cran/badge.svg?branch=master) )
 [//b]: # ( [![codecov](https://codecov.io/gh/torfason/zfit/branch/master/graph/badge.svg)](https://codecov.io/gh/torfason/zfit) )
+[![R-CMD-check](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## TL;DR
