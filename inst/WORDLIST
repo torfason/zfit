@@ -1,9 +1,12 @@
 codecov
 cran
+curlies
 dplyr
 glm
 lm
 magrittr
+NSE
+param
 poisson
 tibble
 zfitter
