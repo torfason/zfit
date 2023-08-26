@@ -2,35 +2,23 @@
 #' Create pipe-friendly fold around a function
 #'
 #' @description
-#' The `zfold()` creates a pipe-friendly version of a function of the
-#' standard format by creating a fold (or wrapper) around it with
-#' the parameters reordered.
-#'
-#' Compared to just using `zfunction()`, which makes a copy of the original
-#' function with rearranged the parameters, this function will call the original
-#' function with all passed parameters. Among other things, it makes it possible
-#' to make pipe-friendly versions of `S3` generics, whereas rearranging
+#' `zfold()` creates a pipe-friendly version of a function of the standard
+#' format by creating a fold (or wrapper) around it with the parameters
+#' reordered. Compared to using `zfunction()`, which makes a copy of the
+#' original function with rearranged the parameters, this creates a wrapper that
+#' in turn will call the original function with all passed parameters. This is
+#' good for making pipe-friendly versions of `S3` generics, whereas rearranging
 #' parameters directly will break the `S3` dispatch mechanism.
 #'
-#' @param fun The function to adapt. The name should not be quoted,
-#'   rather, the actual function should be passed (prefixed with package
-#'   if needed)
-#' @param x The name of the argument that should be moved to the front of the
-#'   argument list. Can be passed with or without quotes, and is processed using
-#'   non-standard evaluation unless surrounded with curlies, as in `{value}`,
-#'   see details below
-#' @param x_not_found How to handle the case where the value of `x` x ix not the
-#'   name of a parameter in fun. If `error`, abort the function. If `ok`, prepend the value to the
-#'   existing parameter list. This can be useful if looking to pipe data into a parameter that
-#'   is hidden by a `...`.
-#'
 #' @examples
-#' char_vector <- rownames(mtcars)
+#' # Using zfold() to create a grep() wrapper with the desired arg order
 #' zgrep <- zfold(grep, x)
-#' grep("ll", char_vector, value=TRUE)
-#' zgrep(char_vector, "ll", value=TRUE)
+#' carnames <- rownames(mtcars)
+#' grep("ll", carnames, value=TRUE)
+#' zgrep(carnames, "ll", value=TRUE)
 #'
 #' @md
+#' @rdname zfunction
 #' @export
 zfold <- function(fun, x, x_not_found = c("error", "warning", "ok")) {
 

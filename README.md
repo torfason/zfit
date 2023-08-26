@@ -7,9 +7,8 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/package=zfit)
-[![Dependencies](https://tinyverse.netlify.com/badge/zfit)](https://cran.r-project.org/package=zfit)
-![CRAN downloads](https://cranlogs.r-pkg.org/badges/zfit)
-
+[![CRAN status
+shields](https://img.shields.io/badge/Git-0.3.0.9001-success)](https://github.com/torfason/zmisc)
 [![R-CMD-check](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -18,82 +17,60 @@ status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/p
 If you are tired of doing the following:
 
 ``` r
-dat <- mtcars %>%
-  filter( am==1 )
-lm( mpg ~ wt + hp, data=dat )
+dat <- mtcars |>
+  filter(am == 1)
+lm(mpg ~ wt + hp, data=dat)
 ```
 
 and would like to do this instead:
 
 ``` r
-mtcars %>%
-  filter( am==1 ) %>%
-  zlm( mpg ~ wt + hp )
+mtcars |> 
+  filter(am == 1) |>
+  zlm(mpg ~ wt + hp)
 ```
 
 then this little package might be something for you.
 
 ## Overview
 
-The goal of `zfit` is to make it easier to use a piped workflow with
-functions that don’t have the “correct” order of parameters (the first
-parameter of the function does not match the object passing through the
-pipe). This issue is especially prevalent with model fitting functions,
-such as when passing and processing a `data.frame` (or `tibble`) before
-passing them to `lm()` or similar functions. The pipe passes the data
-object (`data.frame`/`tibble`) into the first parameter of the function,
-but the conventional estimation functions expect a formula to be the
-first parameter.
+`zfit` makes it easier to use a piped workflow with functions that don’t
+have the “correct” order of parameters (the first parameter of the
+function does not match the object passing through the pipe).
 
-When using `magrittr` style pipes (`%>%`), this can be addressed by
-using special syntax, specifying `data=.` to pass the piped data into a
-parameter other than the first one. With R native pipes (`|>`), however,
-this is not possible and workaround are needed (such as constructing an
-anonymous function for each estimation or relying on complex rules about
-how piped arguments are interpreted in the presence of named
-parameters).
+The issue is especially prevalent with model fitting functions, such as
+when passing and processing a `data.frame` (or `tibble`) before passing
+them to `lm()` or similar functions. The pipe passes the data object
+into the first parameter of the function, but the conventional
+estimation functions expect a formula to be the first parameter.
 
-To address this, this package includes functions such as
-[zlm()](https://torfason.github.io/zfit/reference/zlm.html) and
-[zglm()](https://torfason.github.io/zfit/reference/zglm.html). These are
-very similar to the core estimation functions such as `lm()` and
-`glm()`, but expect the first argument to be a (`data.frame`/`tibble`)
-rather than a formula (the formula becomes the second argument).
+This package addresses the issue with three functions that make it
+trivial to construct a pipe-friendly version of any function:
 
-More importantly, the package includes two functions that make it
-trivial to construct a pipe-friendly version of any function. The
-[zfitter()](https://torfason.github.io/zfit/reference/zfitter.html)
-function takes any estimation function with the standard format of a
-`formula` and `data` parameter, and returns a version suitable for us in
-pipes (with the `data` parameter coming first). The
-[zfitter()](https://torfason.github.io/zfit/reference/zfitter.html)
-function also does some special handling to make make the call
-information more useful.
+- `zfunction()` reorders the arguments of a function. Just pass the name
+  of a function, and the name of the parameter that should receive the
+  piped argument, and it returns a version of the function with that
+  parameter coming first.
 
-The
-[zfunction()](https://torfason.github.io/zfit/reference/zfunction.html)
-works for any function but omits the special handling for call
-parameters. Just pass the name of a function, and the name of the
-parameter that should receive the piped argument, and it returns a
-version of the function with that parameter coming first.
+- `zfold()` creates a fold (a wrapper) around a function with the
+  reordered arguments. This is sometimes needed instead of a simple
+  reordering, for example for achieving correct S3 dispatch, and for
+  functions that report its name or other information in output.
 
-The package also includes the
-[zprint()](https://torfason.github.io/zfit/reference/zprint.html)
-function, which is intended to simplify the printing of derived results,
-such as `summary()`, within the pipe, without affecting the modeling
-result itself. It also includes convenience functions for calling
-estimation functions using particular parameters, including
-[zlogit()](https://torfason.github.io/zfit/reference/zglm.html) and
-[zprobit()](https://torfason.github.io/zfit/reference/zglm.html), and
-[zpoisson()](https://torfason.github.io/zfit/reference/zglm.html), to
+- `zfitter()` takes any estimation function with the standard format of
+  a `formula` and `data` parameter, and returns a version suitable for
+  us in pipes (with the `data` parameter coming first). Internally, it
+  simply calls the `zfold()` function to create a fold around the fitter
+  function.
+
+The package also includes ready made wrappers around the most commonly
+used estimation functions. `zlm()`and `zglm()` correspond to `lm()` and
+`glm()`, and `zlogit()`, `zprobit()`, and `zpoisson()`, use `glm()` to
 perform logistic or poisson regression within a pipe.
 
-*Note that some of the examples provided in the help and documentation
-use magrittr-style (`%>%`) pipe syntax, while others use the native pipe
-syntax (`|>`). The package has been tested with both types of pipe
-functionality and the results are identical, apart from the fact that
-`%>%` renames the piped argument to `.`, whereas the name of the piped
-argument is the complete nested function syntax of the pipe.*
+Finally, the package includes the `zprint()` function, which is intended
+to simplify the printing of derived results, such as `summary()`, within
+the pipe, without affecting the modeling result itself.
 
 ## Installation
 
@@ -124,16 +101,16 @@ The most basic use of the functions in this package is to pass a
 `data.frame`/`tibble` to `zlm()`:
 
 ``` r
-cars %>% zlm( speed ~ dist )
+cars |> zlm(speed ~ dist)
 ```
 
 Often, it is useful to process the `data.frame`/`tibble` before passing
 it to `zlm()`:
 
 ``` r
-iris %>%
-  filter( Species=="setosa" ) %>%
-  zlm( Sepal.Length ~ Sepal.Width + Petal.Width )
+iris |>
+  filter(Species=="setosa") |>
+  zlm(Sepal.Length ~ Sepal.Width + Petal.Width)
 ```
 
 The `zprint()` function provides a simple way to “tee” the piped object
@@ -146,9 +123,9 @@ model object, which is assigned to `m` (instead of assigning the summary
 object):
 
 ``` r
-m <- iris %>%
-  filter(Species=="setosa") %>%
-  zlm(Sepal.Length ~ Sepal.Width + Petal.Width) %>%
+m <- iris |>
+  filter(Species=="setosa") |>
+  zlm(Sepal.Length ~ Sepal.Width + Petal.Width) |>
   zprint(summary)
 ```
 
@@ -160,8 +137,8 @@ within a pipeline before further processing, without breaking the
 pipeline:
 
 ``` r
-sw_subset <- starwars %>%
-  zprint(count, homeworld, sort=TRUE) %>% # prints counts by homeworld
+sw_subset <- starwars |>
+  zprint(count, homeworld, sort=TRUE) |> # prints counts by homeworld
   filter(homeworld=="Tatooine")
 sw_subset  # sw_subset is ungrouped, but filtered by homeworld
 ```

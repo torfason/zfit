@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 [zfunction()]: https://torfason.github.io/zfit/reference/zfunction.html
 [zfitter()]: https://torfason.github.io/zfit/reference/zfitter.html
 [zprint()]: https://torfason.github.io/zfit/reference/zprint.html
@@ -29,11 +28,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/package=zfit)
-[![Dependencies](https://tinyverse.netlify.com/badge/zfit)](https://cran.r-project.org/package=zfit)
-![CRAN downloads](https://cranlogs.r-pkg.org/badges/zfit)
-
-[//a]: # ( ![check_cran](https://github.com/torfason/zfit/workflows/check_cran/badge.svg?branch=master) )
-[//b]: # ( [![codecov](https://codecov.io/gh/torfason/zfit/branch/master/graph/badge.svg)](https://codecov.io/gh/torfason/zfit) )
+[![CRAN status shields](https://img.shields.io/badge/Git-`r desc::desc_get_version() `-success)](https://github.com/torfason/zmisc)
 [![R-CMD-check](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -42,17 +37,17 @@ knitr::opts_chunk$set(
 If you are tired of doing the following:
 
 ``` r
-dat <- mtcars %>%
-  filter( am==1 )
-lm( mpg ~ wt + hp, data=dat )
+dat <- mtcars |>
+  filter(am == 1)
+lm(mpg ~ wt + hp, data=dat)
 ```
 
 and would like to do this instead:
 
 ``` r
-mtcars %>%
-  filter( am==1 ) %>%
-  zlm( mpg ~ wt + hp )
+mtcars |> 
+  filter(am == 1) |>
+  zlm(mpg ~ wt + hp)
 ```
 
 then this little package might be something for you.
@@ -61,7 +56,6 @@ then this little package might be something for you.
 
 ```{r child="man/include/overview.Rmd"}
 ```
-
 
 
 ## Installation
@@ -90,31 +84,31 @@ library(dplyr)
 The most basic use of the functions in this package is to pass a `data.frame`/`tibble` to `zlm()`:
 
 ``` r
-cars %>% zlm( speed ~ dist )
+cars |> zlm(speed ~ dist)
 ```
 
 Often, it is useful to process the `data.frame`/`tibble` before passing it to `zlm()`:
 
 ``` r
-iris %>%
-  filter( Species=="setosa" ) %>%
-  zlm( Sepal.Length ~ Sepal.Width + Petal.Width )
+iris |>
+  filter(Species=="setosa") |>
+  zlm(Sepal.Length ~ Sepal.Width + Petal.Width)
 ```
 
 The `zprint()` function provides a simple way to "tee" the piped object for printing a derived object, but then passing the *original* object onward through the pipe. The following code pipes an estimation model object into `zprint(summary)`. This means that the `summary()` function is called on the model being passed through the pipe, and the resulting summary is printed. However, `zprint(summary)` then returns the original model object, which is assigned to `m`  (instead of assigning the summary object):
 
 ``` r
-m <- iris %>%
-  filter(Species=="setosa") %>%
-  zlm(Sepal.Length ~ Sepal.Width + Petal.Width) %>%
+m <- iris |>
+  filter(Species=="setosa") |>
+  zlm(Sepal.Length ~ Sepal.Width + Petal.Width) |>
   zprint(summary)
 ```
 
 The `zprint()` function is quite useful within an estimation pipeline to print a summary of an object without returning the summary (using `zprint(summary)` as above), but it can also be used independently from estimation models, such as to print a summarized version of a tibble within a pipeline before further processing, without breaking the pipeline:
 
 ``` r
-sw_subset <- starwars %>%
-  zprint(count, homeworld, sort=TRUE) %>% # prints counts by homeworld
+sw_subset <- starwars |>
+  zprint(count, homeworld, sort=TRUE) |> # prints counts by homeworld
   filter(homeworld=="Tatooine")
 sw_subset  # sw_subset is ungrouped, but filtered by homeworld
 ```

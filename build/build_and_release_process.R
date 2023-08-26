@@ -8,14 +8,17 @@
 # devtools::clean_vignettes()
 # pkgdown::clean_site()
 
-## Ensure all documentation builds without errors
+## Run this before any commit
+devtools::spell_check()
 devtools::document()
 devtools::build_readme()
 devtools::build_vignettes()
+
+## Run to check website and/or manual (after the first four)
 devtools::build_site()
 devtools::build_manual()
 
-## Do the final checking steps
+## Do the final checking steps before release
 devtools::spell_check()
 devtools::build()
 devtools::test()

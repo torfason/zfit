@@ -94,7 +94,6 @@ The \code{zpoisson} function calls \code{zglm}, specifying \code{family="poisson
 \seealso{
 \itemize{
 \item \link{zlm} is the wrapper for \link{lm}, probably the most common fitting
-function. The help file for \link{zlm} function includes several
-usage examples.
+function. The help file for \link{zlm} function includes several usage examples.
 }
 }

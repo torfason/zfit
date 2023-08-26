@@ -58,38 +58,32 @@ This function wraps around the \link{lm} function in order to make it
 more friendly to pipe syntax (with the data first).
 }
 \examples{
-
 # Usage is possible without pipes
 zlm( cars, dist ~ speed )
 
-# zfit works well with dplyr
+# zfit works well with dplyr and magrittr pipes
 if ( require("dplyr", warn.conflicts=FALSE) ) {
 
   # Pipe cars dataset into zlm for fitting
-  cars \%>\% zlm( speed ~ dist )
+  cars \%>\% zlm(speed ~ dist)
 
   # Process iris with filter before piping to zlm
   iris \%>\%
-    filter(Species=="setosa") \%>\%
+    filter(Species == "setosa") \%>\%
     zlm(Sepal.Length ~ Sepal.Width + Petal.Width)
 }
 
 # zfit also works well with the native pipe
-if ( getRversion() >= "4.1.0" ) {
+if ( require("dplyr") && getRversion() >= "4.1.0" ) {
 
   # Pipe cars dataset into zlm for fitting
-  cars |> zlm( speed ~ dist )
+  cars |> zlm(speed ~ dist)
 
-  # Extremely naive filtering function for piped usage
-  filter_naive <- function(data, column, value) {
-    data[data[,column]==value,]
-  }
-
-  # Process iris with filter() before piping. Print a summary()
-  # of the fitted model using zprint() before assigning the
-  # model itself (not the summary) to m
+  # Process iris with filter() before piping. Print a
+  # summary of the fitted model using zprint() before
+  # assigning the model itself (not the summary) to m.
   m <- iris |>
-    filter_naive("Species","setosa") |>
+    filter(Species == "setosa") |>
     zlm(Sepal.Length ~ Sepal.Width + Petal.Width) |>
     zprint(summary)
 }

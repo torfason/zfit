@@ -10,58 +10,42 @@ Improve the usage of model fitting functions within a piped
 work flow.
 }
 \details{
-The goal of \code{zfit} is to make it easier to use a piped workflow with
-functions that don’t have the “correct” order of parameters (the first
-parameter of the function does not match the object passing through the
-pipe). This issue is especially prevalent with model fitting functions,
-such as when passing and processing a \code{data.frame} (or \code{tibble}) before
-passing them to \code{lm()} or similar functions. The pipe passes the data
-object (\code{data.frame}/\code{tibble}) into the first parameter of the function,
-but the conventional estimation functions expect a formula to be the
-first parameter.
+\code{zfit} makes it easier to use a piped workflow with functions that don’t
+have the “correct” order of parameters (the first parameter of the
+function does not match the object passing through the pipe).
 
-When using \code{magrittr} style pipes (\verb{\%>\%}), this can be addressed by
-using special syntax, specifying \code{data=.} to pass the piped data into a
-parameter other than the first one. With R native pipes (\verb{|>}), however,
-this is not possible and workaround are needed (such as constructing an
-anonymous function for each estimation or relying on complex rules about
-how piped arguments are interpreted in the presence of named
-parameters).
+The issue is especially prevalent with model fitting functions, such as
+when passing and processing a \code{data.frame} (or \code{tibble}) before passing
+them to \code{lm()} or similar functions. The pipe passes the data object
+into the first parameter of the function, but the conventional
+estimation functions expect a formula to be the first parameter.
 
-To address this, this package includes functions such as
-\code{\link[=zlm]{zlm()}} and \code{\link[=zglm]{zglm()}}. These are very similar to the
-core estimation functions such as \code{lm()} and \code{glm()}, but expect the
-first argument to be a (\code{data.frame}/\code{tibble}) rather than a formula
-(the formula becomes the second argument).
+This package addresses the issue with three functions that make it
+trivial to construct a pipe-friendly version of any function:
+\itemize{
+\item \code{zfunction()} reorders the arguments of a function. Just pass the name
+of a function, and the name of the parameter that should receive the
+piped argument, and it returns a version of the function with that
+parameter coming first.
+\item \code{zfold()} creates a fold (a wrapper) around a function with the
+reordered arguments. This is sometimes needed instead of a simple
+reordering, for example for achieving correct S3 dispatch, and for
+functions that report its name or other information in output.
+\item \code{zfitter()} takes any estimation function with the standard format of
+a \code{formula} and \code{data} parameter, and returns a version suitable for
+us in pipes (with the \code{data} parameter coming first). Internally, it
+simply calls the \code{zfold()} function to create a fold around the fitter
+function.
+}
 
-More importantly, the package includes two functions that make it
-trivial to construct a pipe-friendly version of any function. The
-\code{\link[=zfitter]{zfitter()}} function takes any estimation function with the
-standard format of a \code{formula} and \code{data} parameter, and returns a
-version suitable for us in pipes (with the \code{data} parameter coming
-first). The \code{\link[=zfitter]{zfitter()}} function also does some special
-handling to make make the call information more useful.
+The package also includes ready made wrappers around the most commonly
+used estimation functions. \code{zlm()}and \code{zglm()} correspond to \code{lm()} and
+\code{glm()}, and \code{zlogit()}, \code{zprobit()}, and \code{zpoisson()}, use \code{glm()} to
+perform logistic or poisson regression within a pipe.
 
-The \code{\link[=zfunction]{zfunction()}} works for any function but omits the
-special handling for call parameters. Just pass the name of a function,
-and the name of the parameter that should receive the piped argument,
-and it returns a version of the function with that parameter coming
-first.
-
-The package also includes the \code{\link[=zprint]{zprint()}} function, which is
-intended to simplify the printing of derived results, such as
-\code{summary()}, within the pipe, without affecting the modeling result
-itself. It also includes convenience functions for calling estimation
-functions using particular parameters, including \code{\link[=zlogit]{zlogit()}}
-and \code{\link[=zprobit]{zprobit()}}, and \code{\link[=zpoisson]{zpoisson()}}, to perform
-logistic or poisson regression within a pipe.
-
-\emph{Note that some of the examples provided in the help and documentation
-use magrittr-style (\verb{\%>\%}) pipe syntax, while others use the native pipe
-syntax (\verb{|>}). The package has been tested with both types of pipe
-functionality and the results are identical, apart from the fact that
-\verb{\%>\%} renames the piped argument to \code{.}, whereas the name of the piped
-argument is the complete nested function syntax of the pipe.}
+Finally, the package includes the \code{zprint()} function, which is intended
+to simplify the printing of derived results, such as \code{summary()}, within
+the pipe, without affecting the modeling result itself.
 }
 \seealso{
 \itemize{

@@ -1,28 +1,15 @@
 
-#' Create a pipe-friendly version of a given fitting function
-#'
 #' @description
-#' This creates a pipe-friendly version of a fitting function of the
-#' standard format –– that is a function with a `formula` parameter
-#' followed by a `data` parameter.
-#'
-#' Compared to just using `zfunction()`, this function includes some special
-#' handling to make the call information, which is usually reported by the
-#' `summary()` function more intuitive. Among other things, it shortens very
-#' long data names (longer than 32 characters by default), which otherwise are a
-#' nuisance when the data comes from the pipe, because the pipeline gets
-#' converted to a very long function call.
-#'
-#' This function also stores the base name of the original fitting function,
-#' allowing one to use its full name, which is useful to just pull a single
-#' fitting function from a package without loading it.
-#'
-#' @param fun The fitting function to adapt. The name should not be quoted,
-#'   rather, the actual function should be passed (prefixed with package
-#'   if needed)
+#' `zfitter()` creates a pipe-friendly version of a fitting function of the
+#' standard format –– that is a function with a `formula` parameter followed by
+#' a `data` parameter. It also shortens very long data names (longer than 32
+#' characters by default), which otherwise are a nuisance when the data comes
+#' from the pipe, because the pipeline gets converted to a very long function
+#' call.
 #'
 #' @examples
-#'
+#' # Using zfitter to wrap around a fitting function
+#' # (this is the actual way zlm_robust is defined in this package)
 #' if (requireNamespace("estimatr", quietly = TRUE)) {
 #'   zlm_robust <- zfitter(estimatr::lm_robust)
 #'   zlm_robust(cars, speed~dist)
@@ -41,14 +28,14 @@
 #'
 #'   # Process iris with filter() before piping. Print a summary()
 #'   # of the fitted model using zprint() before assigning the
-#'   # model itself (not the summary) to m
+#'   # model itself (not the summary) to m.
 #'   m <- iris %>%
 #'     dplyr::filter(Species=="setosa") %>%
 #'     zlm_robust(Sepal.Length ~ Sepal.Width + Petal.Width) %>%
 #'     zprint(summary)
 #' }
 #'
-#' @md
+#' @rdname zfunction
 #' @export
 zfitter <- function(fun) {
 

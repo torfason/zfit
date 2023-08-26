@@ -7,35 +7,34 @@
 zprint(x, f = NULL, ...)
 }
 \arguments{
-\item{x}{An object, typically in a pipe}
+\item{x}{An object, typically in a pipe.}
 
-\item{f}{A function to be applied to \code{x} before printing}
+\item{f}{A function to be applied to \code{x} before printing.}
 
-\item{...}{Other arguments to be passed to \code{f}}
+\item{...}{Other arguments to be passed to \code{f}.}
 }
 \value{
-The original object \code{x}
+The original object \code{x}.
 }
 \description{
-This function passes \code{x} to \code{f} and prints the result, but then
-returns the original \code{x}. It is useful in a pipe, when one wants a to
-print the derivative of an object in the pipe but then return or assign the
-original object. A common use case is printing the \code{summary()} of an
-estimated model but then assigning the original model (rather than the
-summary object) to a variable for further processing.
+Given \code{x} and \code{f}, this function prints \code{f(x)} before returning the original
+\code{x}. It is useful in a pipe, when one wants a to print the derivative of an
+object in the pipe but then return or assign the original object. A common
+use case is printing the `summary() of an estimated model but then assigning
+the original model (rather than the summary object) to a variable for further
+processing.
 }
 \examples{
-
-if ( require("dplyr", warn.conflicts=FALSE) ) {
+if (getRversion() >= "4.1.0" && require("dplyr")) {
 
   # Print summary before assigning model to variable
-  m <- lm( speed ~ dist, cars) \%>\%
+  m <- lm( speed ~ dist, cars) |>
     zprint(summary) # prints summary(x)
   m                 # m is the original model object
 
   # Print grouped data before filtering original
-  cw_subset <- chickwts \%>\%
-    zprint(count, feed, sort=TRUE) \%>\% # prints counts by feed
+  cw_subset <- chickwts |>
+    zprint(count, feed, sort=TRUE) |> # prints counts by feed
     filter(feed=="soybean")
   cw_subset # cw_subset is ungrouped, but filtered by feed
 }

@@ -7,7 +7,6 @@ utils::globalVariables("binomial")
 #' Run a glm model in a pipe
 #'
 #' @description
-#'
 #' These functions are wrappers for the [glm] function. The `zglm` function can
 #' be used to estimate any generalized linear model in a pipe. The `zlogit`,
 #' `zprobit`, and `zpoisson` functions can be used to estimate specific models.
@@ -40,10 +39,8 @@ utils::globalVariables("binomial")
 #' @return A fitted model.
 #'
 #' @seealso * [zlm] is the wrapper for [lm], probably the most common fitting
-#'   function. The help file for [zlm] function includes several
-#'   usage examples.
+#'   function. The help file for [zlm] function includes several usage examples.
 #'
-#' @md
 #' @export
 zglm <- zfitter(stats::glm)
 
@@ -52,7 +49,6 @@ zglm <- zfitter(stats::glm)
 #' The `zlogit` function calls `zglm`, specifying `family=binomial(link="logit")`.
 #'
 #' @name zglm
-#' @md
 #' @export
 zlogit = function(data, formula, ...) {
     # Assign data to local var, to preserve form of call (see zlm())
@@ -65,7 +61,6 @@ zlogit = function(data, formula, ...) {
 #' The `zprobit` function calls `zglm`, specifying `family=binomial(link="probit")`.
 #'
 #' @name zglm
-#' @md
 #' @export
 zprobit = function(data, formula, ...) {
     # Assign data to local var, to preserve form of call (see zlm())
@@ -78,7 +73,6 @@ zprobit = function(data, formula, ...) {
 #' The `zpoisson` function calls `zglm`, specifying `family="poisson"`.
 #'
 #' @name zglm
-#' @md
 #' @export
 zpoisson = function(data, formula, ...) {
     # Assign data to local var, to preserve form of call (see zlm())

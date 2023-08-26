@@ -1,25 +1,29 @@
 
-#' Create a pipe-friendly version of any function
+#' Create a pipe-friendly version of a function
 #'
 #' @description
-#' `zfunction()` rearranges the arguments of any function moving the
-#' specified argument to the front of the list, so that this argument
-#' becomes the recipient of piping.
+#' These functions all serve the role of rearranging the arguments of other
+#' functions, in order to create pipe-friendly versions.
 #'
-#' It returns a copy of the input function, that is completely
-#' identical except for the order of the arguments.
+#' `zfunction()` rearranges the arguments of any function moving the specified
+#' argument to the front of the list, so that this argument becomes the
+#' recipient of piping. It returns a copy of the input function, that is
+#' identical to the original except for the order of the arguments.
 #'
-#' @param fun The function to adapt. The name should not be quoted,
-#'   rather, the actual function should be passed (prefixed with package
+#' @param fun The function to adapt (for `zfitter()` this should be a fitting
+#'   function that takes `formula` and `data` parameters). The name should not be
+#'   quoted, rather, the actual function should be passed (prefixed with package
 #'   if needed).
+#'
 #' @param x The name of the argument that should be moved to the front of the
 #'   argument list. Can be passed with or without quotes, and is processed using
 #'   non-standard evaluation unless surrounded with curlies, as in `{value}`,
-#'   see details below
-#' @param x_not_found How to handle the case where the value of `x` x ix not the
-#'   name of a parameter in fun. If `error`, abort the function. If `ok`, prepend the value to the
-#'   existing parameter list. This can be useful if looking to pipe data into a parameter that
-#'   is hidden by a `...`.
+#'   see details below.
+#'
+#' @param x_not_found How to handle the case where the value of `x` is not the
+#'   name of a parameter in `fun`. If `error`, abort the function. If `ok`,
+#'   prepend the value to the existing parameter list. This can be useful if
+#'   looking to pipe data into a parameter that is hidden by a `...`.
 #'
 #' @details
 #' The `x` parameter is processed using non-standard evaluation, which can be
@@ -32,15 +36,14 @@
 #'   * `param_name <- "to"; zfunction(file.rename, {param_name})`
 #'
 #' @examples
-#'
-#' char_vector <- rownames(mtcars)
-#'
 #' # A a grep function with x as first param is often useful
 #' zgrep <- zfunction(grep, x)
-#' grep("ll", char_vector, value=TRUE)
-#' zgrep(char_vector, "ll", value=TRUE)
+#' carnames <- rownames(mtcars)
+#' grep("ll", carnames, value=TRUE)
+#' zgrep(carnames, "ll", value=TRUE)
 #'
-#' # plsr hides the data parameter behind the ...
+#' # zfunction() is the best approach to wrapping functions such as
+#' # `pls::plsr()` that hide the data parameter behind the `...`.
 #' if (requireNamespace("pls")) {
 #'   zplsr <- zfunction(pls::plsr, data, x_not_found = "ok")
 #'   zplsr(cars, dist ~ speed)
@@ -53,6 +56,7 @@
 #' f3 <- zfunction(file.rename, {param_name})
 #'
 #' @md
+#' @rdname zfunction
 #' @export
 zfunction <- function(fun, x, x_not_found = c("error", "warning", "ok")) {
 
