@@ -19,7 +19,7 @@ msg_pkg_missing <- function(fun, pkg) {
 #'
 #' @examples
 #' if (requireNamespace("estimatr") && getRversion() >= "4.1.0")
-#'   zlm_robust(cars, dist ~ speed) |> summary()
+#'   zlm_robust(cars, dist ~ speed) |> summary() |> try()
 #'
 #' @name zlm_robust
 #' @rdname external_fitters
@@ -28,7 +28,7 @@ if (requireNamespace("estimatr", quietly = TRUE)) {
   zlm_robust <- zfitter(estimatr::lm_robust)
 } else {
   zlm_robust <- function(...) {
-    warning(msg_pkg_missing("zlm_robust()", "estimatr"))
+    stop(msg_pkg_missing("zlm_robust()", "estimatr"))
   }
 }
 
@@ -39,7 +39,7 @@ if (requireNamespace("estimatr", quietly = TRUE)) {
 #'
 #' @examples
 #' if (requireNamespace("MASS") && getRversion() >= "4.1.0")
-#'   zpolr(mtcars, ordered(gear) ~ mpg + hp) |> summary()
+#'   zpolr(mtcars, ordered(gear) ~ mpg + hp) |> summary() |> try()
 #'
 #' @name zpolr
 #' @rdname external_fitters
@@ -48,7 +48,7 @@ if (requireNamespace("MASS", quietly = TRUE)) {
   zpolr <- zfitter(MASS::polr)
 } else {
   zpolr <- function(...) {
-    warning(msg_pkg_missing("zpolr()", "MASS"))
+    stop(msg_pkg_missing("zpolr()", "MASS"))
   }
 }
 
@@ -59,7 +59,7 @@ if (requireNamespace("MASS", quietly = TRUE)) {
 #'
 #' @examples
 #' if (requireNamespace("pls") && getRversion() >= "4.1.0")
-#'   zplsr(cars, dist ~ speed) |> summary()
+#'   zplsr(cars, dist ~ speed) |> summary() |> try()
 #'
 #' @name zplsr
 #' @rdname external_fitters
@@ -68,6 +68,6 @@ if (requireNamespace("pls", quietly = TRUE)) {
   zplsr <- zfunction(pls::plsr, x = "data", x_not_found = "ok")
 } else {
   zplsr <- function(...) {
-    warning(msg_pkg_missing("zplsr()", "pls"))
+    stop(msg_pkg_missing("zplsr()", "pls"))
   }
 }

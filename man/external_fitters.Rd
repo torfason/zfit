@@ -22,12 +22,12 @@ regression.
 }
 \examples{
 if (requireNamespace("estimatr") && getRversion() >= "4.1.0")
-  zlm_robust(cars, dist ~ speed) |> summary()
+  zlm_robust(cars, dist ~ speed) |> summary() |> try()
 
 if (requireNamespace("MASS") && getRversion() >= "4.1.0")
-  zpolr(mtcars, ordered(gear) ~ mpg + hp) |> summary()
+  zpolr(mtcars, ordered(gear) ~ mpg + hp) |> summary() |> try()
 
 if (requireNamespace("pls") && getRversion() >= "4.1.0")
-  zplsr(cars, dist ~ speed) |> summary()
+  zplsr(cars, dist ~ speed) |> summary() |> try()
 
 }
