@@ -146,8 +146,7 @@ linear models.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Usage is possible without pipes</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Usage is possible without pipes</span></span></span>
 <span class="r-in"><span><span class="fu">zlm</span><span class="op">(</span> <span class="va">cars</span>, <span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span> <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
@@ -158,15 +157,15 @@ linear models.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     -17.579        3.932  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># zfit works well with dplyr</span></span></span>
+<span class="r-in"><span><span class="co"># zfit works well with dplyr and magrittr pipes</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span>, warn.conflicts<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Pipe cars dataset into zlm for fitting</span></span></span>
-<span class="r-in"><span>  <span class="va">cars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">zlm</span><span class="op">(</span> <span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span> <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">cars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">zlm</span><span class="op">(</span><span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Process iris with filter before piping to zlm</span></span></span>
 <span class="r-in"><span>  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span><span class="op">==</span><span class="st">"setosa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">zlm</span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -179,28 +178,23 @@ linear models.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># zfit also works well with the native pipe</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">getRversion</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"4.1.0"</span> <span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">getRversion</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"4.1.0"</span> <span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Pipe cars dataset into zlm for fitting</span></span></span>
-<span class="r-in"><span>  <span class="va">cars</span> <span class="op">|&gt;</span> <span class="fu">zlm</span><span class="op">(</span> <span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span> <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">cars</span> <span class="op">|&gt;</span> <span class="fu">zlm</span><span class="op">(</span><span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Extremely naive filtering function for piped usage</span></span></span>
-<span class="r-in"><span>  <span class="va">filter_naive</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">column</span>, <span class="va">value</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">data</span><span class="op">[</span><span class="va">data</span><span class="op">[</span>,<span class="va">column</span><span class="op">]</span><span class="op">==</span><span class="va">value</span>,<span class="op">]</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Process iris with filter() before piping. Print a summary()</span></span></span>
-<span class="r-in"><span>  <span class="co"># of the fitted model using zprint() before assigning the</span></span></span>
-<span class="r-in"><span>  <span class="co"># model itself (not the summary) to m</span></span></span>
+<span class="r-in"><span>  <span class="co"># Process iris with filter() before piping. Print a</span></span></span>
+<span class="r-in"><span>  <span class="co"># summary of the fitted model using zprint() before</span></span></span>
+<span class="r-in"><span>  <span class="co"># assigning the model itself (not the summary) to m.</span></span></span>
 <span class="r-in"><span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>    <span class="fu">filter_naive</span><span class="op">(</span><span class="st">"Species"</span>,<span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu">zlm</span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Width</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="zprint.html">zprint</a></span><span class="op">(</span><span class="va">summary</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = Sepal.Length ~ Sepal.Width + Petal.Width, data = filter_naive(iris, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "Species", "setosa"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = Sepal.Length ~ Sepal.Width + Petal.Width, data = filter(iris, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Species == "setosa"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Min       1Q   Median       3Q      Max </span>
