@@ -13,6 +13,8 @@ NSE
 param
 poisson
 tibble
+roxygen
+roxygen2
 zfitter
 zfunction
 zglm

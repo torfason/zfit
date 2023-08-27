@@ -20,14 +20,17 @@ devtools::build_manual()
 
 ## Do the final checking steps before release
 devtools::spell_check()
+urlchecker::url_check()
 devtools::build()
 devtools::test()
 devtools::check()
+devtools::check(remote = TRUE, manual = TRUE)
 devtools::release_checks()
 devtools:::git_checks()
 
 ## Remote checks
 ## (commented out, copy to terminal and run manually)
+# revdepcheck::revdep_check(num_workers = 4) # (usethis::use_revdep())
 # devtools::check_rhub()
 # devtools::check_win_devel()
 

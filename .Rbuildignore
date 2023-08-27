@@ -10,3 +10,5 @@
 ^build$
 ^_pkgdown\.yml$
 ^\.github$
+^revdep$
+^CRAN-SUBMISSION$

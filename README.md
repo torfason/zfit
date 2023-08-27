@@ -8,7 +8,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/zfit)](https://cran.r-project.org/package=zfit)
 [![CRAN status
-shields](https://img.shields.io/badge/Git-0.3.0.9001-success)](https://github.com/torfason/zmisc)
+shields](https://img.shields.io/badge/Git-0.4.0-success)](https://github.com/torfason/zmisc)
 [![R-CMD-check](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/zfit/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 

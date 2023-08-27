@@ -14,8 +14,10 @@ test_that("zfunction works", {
 
 })
 
+
 test_that("zfunction curly notation works", {
 
+  # Define a parameter name
   the_param_name <- "x"
 
   # Define the zgrep function, which is our test case
@@ -32,20 +34,21 @@ test_that("zfunction curly notation works", {
   expect_equal(zgrep, zgrep_curly_named)
 })
 
+
 context("zfold")
 
 test_that("zfold works", {
 
+  # Check that the abc() helper works as expected
   abc() |> expect_output(".*a.*b.*c")
-
-  hi <- "hi"
-
   "hi" |> abc() |> expect_output("a.*hi.*b")
 
+  # Define alternative functions
   bac_function <- zfunction(abc, b)
   bac_fold     <- zfold(abc, b)
 
   # function first, constant and variable
+  hi <- "hi"
   "hi" |> bac_function() |> expect_output("b.*hi.*c")
   hi   |> bac_function() |> expect_output("b.*hi.*c")
 
@@ -53,23 +56,22 @@ test_that("zfold works", {
   "hi" |> bac_fold() |> expect_output("b.*hi.*c")
   hi   |> bac_fold() |> expect_output("b.*hi.*c")
 
+  # Define the zgrep function
+  zgrep <- zfold(grep, x)
 
-  # # Define the zgrep function, which is our test case
-  # zgrep <- zfold(grep, x)
-  #
-  # # Run grep and zgrep on the same input (apart from order)
-  # char_vector <- rownames(mtcars)
-  # r.grep  <- grep("ll", char_vector, value=TRUE)
-  # r.zgrep <- zgrep(char_vector, "ll", value=TRUE)
-  # expect_equal(r.zgrep, r.grep)
-
+  # Run grep and zgrep on the same input (apart from order)
+  carnames <- rownames(mtcars)
+  r.grep  <- grep("ll", carnames, value=TRUE)
+  r.zgrep <- zgrep(carnames, "ll", value=TRUE)
+  expect_equal(r.zgrep, r.grep)
 })
 
 test_that("zfold curly notation works", {
 
+  # Define parameter
   the_param_name <- "x"
 
-  # Define the zgrep function, which is our test case
+  # Define the zgrep function
   zgrep <- zfold(grep, x)
   zgrep_constant       <- zfold(grep, "x")
   zgrep_constant_named <- zfold(grep, x = "x")
@@ -83,10 +85,12 @@ test_that("zfold curly notation works", {
   expect_equal(zgrep, zgrep_curly_named)
 })
 
+
 context("zfold generics")
 
 test_that("zfold on S3 generic print works", {
   if (requireNamespace("tibble") && getRversion() >= "4.1.0") {
+
     # Flip order of print generic, but still dispatch to print.tbl_df
     ztbl_print <- zfold(print, "n", x_not_found = "ok")
     cartibble <- tibble::tibble(cars)
@@ -99,12 +103,13 @@ test_that("zfold on S3 generic print works", {
     13 |> ztbl_print(cartibble) |>
       expect_output("37 more rows")
   }
-
 })
+
 
 test_that("zfold on well-behaved S3 generics works", {
   if (getRversion() >= "4.1.0") {
 
+    # Define dispatch functions
     dispatch           <- function(x, y) { UseMethod("dispatch") }
     dispatch.default   <- function(x, y) { paste("default", x, y) }
     dispatch.numeric   <- function(x, y) { paste("numeric", x, y) }
@@ -125,6 +130,7 @@ test_that("zfold on well-behaved S3 generics works", {
 
 test_that("zfold on poorly-behaved S3 generics doesn't work", {
   if (getRversion() >= "4.1.0") {
+
     # Flip order of t.test generic, but still dispatch t.test.formula
     zgt.test <- zfold(t.test, "data", x_not_found = "ok")
 
@@ -137,9 +143,6 @@ test_that("zfold on poorly-behaved S3 generics doesn't work", {
   }
 })
 
-test_that("docs for zfunction, zfold, and zfitter are combined", {
-  skip("Need to combine docs for zfunction, zfold, and zfitter")
-})
 
 context("zfitter")
 
@@ -164,11 +167,10 @@ test_that("zfitter works", {
   }
 
   # Test usage in the context of native pipes
-  if ( getRversion() >= "4.1" ) {
+  if ( getRversion() >= "4.1.0" ) {
     m.zzlm.np <- cars |> zzlm(dist~speed)
     expect_equal(m.zzlm.np, m.lm)
   }
-
 })
 
 test_that("zfitter error checking works",{
@@ -182,7 +184,6 @@ test_that("zfitter error checking works",{
   # The target function must have both function and data parameters
   expect_error(zfitter(grep))
   expect_error(zfitter(within))
-
 })
 
 
